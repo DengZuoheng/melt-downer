@@ -34,6 +34,7 @@ Melt Downer是一个简单的omnibox搜索扩展, 减少使用谷歌高级搜索
 
 ## 如何使用
 
+0. 光标定位到地址栏(windows:ctrl+L或alt+D或F6; max: command+L; linux: ctrl+L)
 1. 清空地址栏
 2. 输入`$`, 空格, 进入Melt Downer
 3. 输入关键词及参数, 回车
@@ -60,7 +61,7 @@ Melt Downer是一个简单的omnibox搜索扩展, 减少使用谷歌高级搜索
     - 手办 lang:jp // 日语
     - c++ lang:chs // 简体中文
 
-被缩写的语言代码可以再`GoogleSearchURLGenerater.getParamAlias()["values"]["lr"]`
+被缩写的语言代码在`GoogleSearchURLGenerater.getParamAlias()["values"]["lr"]`
 
 ### time/last(仅显示最近的结果)
 

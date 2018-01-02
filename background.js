@@ -209,11 +209,51 @@ class BaiduSearchURLGenerater extends BaseSearchURLGenerater {
     }
 }
 
+class JiraSearchURLGenerater extends BaseSearchURLGenerater {
+    constructor(kwargs) {
+        super();
+        this.searchArg = "";
+    }
+    genURL(args) {
+        let baseURL = this.getBaseSearchURL();
+        let ticket = "";
+        for (var key of args) {
+            console.log(key);
+            if (/^\d*$/.test(key)) {
+                ticket = "GUI-" + key;
+            } else if (/^[A-Za-z]*?-\d*$/.test(key)) {
+                ticket = key;
+            }
+        }
+        return baseURL + ticket;
+    }
+
+    getBaseSearchURL() {
+        return "http://jira-brion.asml.com/browse/";
+    }
+    customParseParam(key) {
+        return {
+            "isParam" : false,
+        };
+       
+    }
+    engineName() {
+        return "jira";
+    }
+    getParamAlias() {
+        return {
+            "keys" : {}, // keys
+            "values" : {}, // values
+        };
+    }
+}
+
 function getSearchURL(text) {
     globalEngineAlias = {
         "go" : "google",
         "bing" : "bing",
-        "baidu" : "baidu"
+        "baidu" : "baidu",
+        "jira" : "jira"
     }
 
     globalEngineArgs = {
@@ -224,6 +264,9 @@ function getSearchURL(text) {
 
         },
         "baidu" : {
+
+        },
+        "jira" : {
 
         }
     }
@@ -247,6 +290,8 @@ function getSearchURL(text) {
         generator = new BingSearchURLGenerater(engineArgs);
     } else if (engine == "baidu") {
         generator = new BaiduSearchURLGenerater(engineArgs);
+    } else if (engine == "jira") {
+        generator = new JiraSearchURLGenerater(engineArgs);
     }
     if (generator) {
         return generator.genURL(filterd);
